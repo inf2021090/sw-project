@@ -29,7 +29,7 @@ def main():
 
     # Sidebar navigation
     st.sidebar.title('Navigation')
-    page = st.sidebar.radio("Go to", ('Upload Data', 'Information', 'Data Visualization'))
+    page = st.sidebar.radio("Go to", ('Upload Data', 'Information', 'Data Visualization', 'Machine Learning'))
 
     if page == 'Upload Data':
         st.title('Data Upload and Display')
@@ -67,12 +67,12 @@ def main():
         if 'data' not in st.session_state:
             st.warning("Please upload a file first in the 'Upload Data' section.")
         else:
-            st.header("2D Visualization")
+            st.title("2D Visualization")
 
             # Choose a visualization type
             option = st.selectbox("Select Algorithm", ["None", "PCA Plot", "LDA Plot"])
 
-            if (option == 'PCA Plot'):
+            if option == 'PCA Plot':
                 if 'X' in st.session_state and 'y' in st.session_state:
                     pca_plot(st.session_state.X, st.session_state.y)
                     correlation_heatmap(st.session_state.data)
@@ -81,7 +81,7 @@ def main():
                 else:
                     st.warning("Please upload data and split it before visualizing.")
 
-            elif (option == 'LDA Plot'):
+            elif option == 'LDA Plot':
                 if 'X' in st.session_state and 'y' in st.session_state:
                     lda_plot(st.session_state.X, st.session_state.y)
                     correlation_heatmap(st.session_state.data)
@@ -90,6 +90,21 @@ def main():
                 else:
                     st.warning("Please upload data and split it before visualizing.")
 
+    elif page == 'Machine Learning':
+        st.title('Machine Learning')
+        st.write('Select problem(s): ')
+
+        classification_selected = st.checkbox('Classification')
+        clustering_selected = st.checkbox('Clustering')
+
+        if classification_selected:
+            classification_algorithm = st.selectbox('Select Classification Algorithm', ["None", "KNN", "Random Forests"])
+
+        if clustering_selected:
+            clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
+
+        if not classification_selected and not clustering_selected:
+            st.warning("Please select at least one problem type.")
 
     elif page == 'Information':
         display_info()
