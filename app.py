@@ -3,7 +3,8 @@ import pandas as pd
 
 from utils.data_loader import load_data
 from utils.info import display_info
-from ml import *
+from ml.data_visualization import pca_plot
+
 
 def display_data(data):
     st.write("Data Table:")
@@ -22,13 +23,15 @@ def split_data(data):
     return data, X, y
 
 def main():
-    st.title('Data Upload and Display')
+    st.title('Super Cool ML Application')
 
     # Sidebar navigation
     st.sidebar.title('Navigation')
     page = st.sidebar.radio("Go to", ('Upload Data', 'Information', 'Data Visualization'))
 
     if page == 'Upload Data':
+        st.title('Data Upload and Display')
+
         uploaded_file = st.file_uploader("Choose a CSV file", type=["csv", "xlsx"])
 
         if uploaded_file is None:
@@ -45,17 +48,33 @@ def main():
             st.error("Failed to load data. Please check your file.")
             return
 
-        data, X, y = split_data(data)
-        display_data(data)  # Call display_data function
+        # Store data in session state
+        st.session_state.data = data
 
+        # Display uploaded data
+        display_data(data)
+
+        # Split dataset
+        split_data(data)
+    
     elif page == 'Data Visualization':
         if 'data' not in st.session_state:
             st.warning("Please upload a file first in the 'Upload Data' section.")
         else:
-            visualize_dataset(st.session_state.data)
+            st.header("2D Visualization")
+
+            # Choose a visualization type
+            option = st.selectbox("Select Algorithm", ["None", "PCA Plot", "LDA Plot"])
+
+            if (option == 'PCA Plot'):
+                pca_plot(st.session_state.data)
+            
+            elif (option == 'LAD Plot'):
+                pass
+
 
     elif page == 'Information':
-        display_info()  
+        display_info()
 
 if __name__ == '__main__':
     main()
