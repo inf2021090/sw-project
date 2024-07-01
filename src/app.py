@@ -4,6 +4,7 @@ import pandas as pd
 from utils.data_loader import load_data
 from utils.info import display_info
 from ml.data_visualization import *
+from ml.clustering import *
 
 
 def display_data(data):
@@ -102,7 +103,9 @@ def main():
 
         if clustering_selected:
             clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
-
+            if (clustering_algorithm == 'K-Means'):  
+                k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
+                st.write(knn(k, st.session_state.X, st.session_state.y))
         if not classification_selected and not clustering_selected:
             st.warning("Please select at least one problem type.")
 
