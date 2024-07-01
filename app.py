@@ -5,12 +5,9 @@ from utils.data_loader import load_data
 from utils.info import display_info
 from ml import *
 
-import streamlit as st
-import pandas as pd
-
-from utils.data_loader import load_data
-from utils.info import display_info
- # Import the new function for dataset visualization
+def display_data(data):
+    st.write("Data Table:")
+    st.write(data)
 
 def split_data(data):
     X = data.iloc[:, :-1]  # All columns except the last one are features
@@ -49,8 +46,8 @@ def main():
             return
 
         data, X, y = split_data(data)
-        display_data(data)
-    
+        display_data(data)  # Call display_data function
+
     elif page == 'Data Visualization':
         if 'data' not in st.session_state:
             st.warning("Please upload a file first in the 'Upload Data' section.")
