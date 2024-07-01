@@ -11,7 +11,6 @@ def display_data(data):
     st.write("Data Table:")
     st.write(data)
 
-
 def split_data(data):
     X = data.iloc[:, :-1]  # All columns except the last one are features
     y = data.iloc[:, -1]   # Last column is the label
@@ -23,7 +22,6 @@ def split_data(data):
     st.write(y)
 
     return X, y
-
 
 def main():
     st.title('Super Cool ML Application')
@@ -42,7 +40,7 @@ def main():
             return
 
         try:
-            data = load_data(uploaded_file)
+            data = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
         except Exception as e:
             st.error(f"Error: {e}")
             return
@@ -103,15 +101,21 @@ def main():
 
         if clustering_selected:
             clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
-            if (clustering_algorithm == 'K-Means'):  
+            if clustering_algorithm == 'K-Means':
                 k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
-                st.write(knn(k, st.session_state.X, st.session_state.y))
+                st.write('K is:', k)
+                if 'X' in st.session_state and 'y' in st.session_state:
+                    fig, accuracy = knn(k, st.session_state.X, st.session_state.y)
+                    st.pyplot(fig)
+                    st.write(f"Accuracy: {accuracy:.2f}")
+                else:
+                    st.warning("Please upload data and split it before running KNN.")
+
         if not classification_selected and not clustering_selected:
             st.warning("Please select at least one problem type.")
 
     elif page == 'Information':
         display_info()
-
 
 if __name__ == '__main__':
     main()
