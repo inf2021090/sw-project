@@ -4,7 +4,7 @@ import pandas as pd
 from utils.data_loader import load_data
 from utils.info import display_info
 from ml.data_visualization import *
-from ml.clustering import *
+from ml.classification import *
 
 
 def display_data(data):
@@ -98,10 +98,7 @@ def main():
 
         if classification_selected:
             classification_algorithm = st.selectbox('Select Classification Algorithm', ["None", "KNN", "Random Forests"])
-
-        if clustering_selected:
-            clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
-            if clustering_algorithm == 'K-Means':
+            if classification_algorithm== 'KNN':
                 k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
                 st.write('K is:', k)
                 if 'X' in st.session_state and 'y' in st.session_state:
@@ -111,6 +108,10 @@ def main():
                 else:
                     st.warning("Please upload data and split it before running KNN.")
 
+
+        if clustering_selected:
+            clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
+            # add here 
         if not classification_selected and not clustering_selected:
             st.warning("Please select at least one problem type.")
 
