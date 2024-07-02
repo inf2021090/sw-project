@@ -98,20 +98,24 @@ def main():
         problem_type = st.radio('Select Problem Type', ('Classification', 'Clustering'))
 
         if problem_type == 'Classification':
-            st.write('Executing both K-Nearest Neighbors (KNN) and Decision Trees for Classification...')
+            st.write('Executing both Random Forests and Decision Trees for Classification...')
 
             if 'X' in st.session_state and 'y' in st.session_state:
                 # Execute KNN
-                k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
-                st.write('K is:', k)
-                fig_knn, accuracy_knn = knn(k, st.session_state.X, st.session_state.y)
-                st.pyplot(fig_knn)
-                st.write(f"KNN Accuracy: {accuracy_knn:.2f}")
+                #k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
+                #st.write('K is:', k)
+                #fig_knn, accuracy_knn = knn(k, st.session_state.X, st.session_state.y)
+                #st.pyplot(fig_knn)
+                accuracy_rf, fig_dt_buf = random_forest(st.session_state.X, st.session_state.y)
+                st.image(fig_dt_buf, caption='Random Forest Visualization', use_column_width=True)
+                st.write(f"Random Forest Accuracy: {accuracy_rf:.5f}")
 
+            if 'X' in st.session_state and 'y' in st.session_state:
                 # Execute Decision Trees
-                fig_dt, accuracy_dt = decision_tree(st.session_state.X, st.session_state.y)
-                st.pyplot(fig_dt)
-                st.write(f"Decision Trees Accuracy: {accuracy_dt:.2f}")
+                accuracy_dt, fig_dt_buf = decision_tree(st.session_state.X, st.session_state.y)
+                #st.image(fig_dt.create_png(), caption='Decision Tree Visualization', use_column_width=True)
+                st.image(fig_dt_buf, caption='Decision Tree Visualization', use_column_width=True)
+                st.write(f"Decision Trees Accuracy: {accuracy_dt:.5f}")
 
             else:
                 st.warning("Please upload data and split it before running Classification.")
@@ -121,18 +125,18 @@ def main():
 
             if 'X' in st.session_state and 'y' in st.session_state:
                 # Execute K-Means
-                k = st.slider("Select number of clusters (k) for K-Means", 2, 15, 3)
+                k = st.slider("Select number of clusters (k) for K-Means", 5, 15, 3)
                 st.write('K is:', k)
                 fig_km, ari_km = kmeans(k, st.session_state.X, st.session_state.y)  
                 st.pyplot(fig_km)
-                st.write(f"K-Means Adjusted Rand Index: {ari_km:.2f}")
+                st.write(f"K-Means Adjusted Rand Index: {ari_km:.5f}")
 
                 # Execute GMM
                 n_components = st.slider("Select number of components for GMM", 1, 15, 3)
                 st.write('Number of components:', n_components)
                 fig_gmm, ari_gmm = gmm(n_components, st.session_state.X, st.session_state.y)  
                 st.pyplot(fig_gmm)
-                st.write(f"GMM Adjusted Rand Index: {ari_gmm:.2f}")
+                st.write(f"GMM Adjusted Rand Index: {ari_gmm:.5f}")
 
             else:
                 st.warning("Please upload data before running Clustering.")

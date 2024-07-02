@@ -1,11 +1,16 @@
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
+import io
 import matplotlib.pyplot as plt
 
-# Overfiting after 6
+
+
+# Overfiting :(
 def knn(k, X, y):
     # Split the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
@@ -36,3 +41,59 @@ def knn(k, X, y):
     plt.grid(True)
     
     return fig, accuracy
+
+def random_forest(X, y):
+    # Split dataset into training set and test set
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) 
+
+    # Create Random Forest classifier object
+    clf = RandomForestClassifier(n_estimators=100, random_state=1)
+
+    # Train Random Forest classifier
+    clf = clf.fit(X_train, y_train)
+
+    # Predict the response for test dataset
+    y_pred = clf.predict(X_test)
+
+    # Calculate accuracy
+    accuracy = accuracy_score(y_test, y_pred)
+
+    # Visualize one of the trees in the random forest
+    fig, ax = plt.subplots(figsize=(20, 10))
+    plot_tree(clf.estimators_[0], filled=True, feature_names=X.columns, class_names=[str(i) for i in clf.classes_], ax=ax)
+    plt.title("Random Forest Visualization (Single Tree)")
+    
+    # Save plot to a bytes buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+
+    return accuracy, buf
+
+def decision_tree(X, y):
+    # Split dataset into training set and test set
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) 
+
+    # Create Decision Tree classifier object
+    clf = DecisionTreeClassifier()
+
+    # Train Decision Tree classifier
+    clf = clf.fit(X_train, y_train)
+
+    # Predict the response for test dataset
+    y_pred = clf.predict(X_test)
+
+    # Calculate accuracy
+    accuracy = accuracy_score(y_test, y_pred)
+
+    # Visualize the decision tree
+    fig, ax = plt.subplots(figsize=(20, 10))
+    plot_tree(clf, filled=True, feature_names=X.columns, class_names=[str(i) for i in clf.classes_], ax=ax)
+    plt.title("Decision Tree Visualization")
+    
+    # Save plot to a bytes buffer
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+
+    return accuracy, buf
