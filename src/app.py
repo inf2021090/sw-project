@@ -5,6 +5,7 @@ from utils.data_loader import load_data
 from utils.info import display_info
 from ml.data_visualization import *
 from ml.classification import *
+from ml.clustering import *
 
 
 def display_data(data):
@@ -111,7 +112,15 @@ def main():
 
         if clustering_selected:
             clustering_algorithm = st.selectbox('Select Clustering Algorithm', ["None", "K-Means", "GMM"])
-            # add here 
+            if clustering_algorithm== 'K-Means':
+                k = st.slider("Select number of clusters (k) for K-Means", 2, 15, 3)
+                st.write('K is:', k)
+                if 'X' in st.session_state and 'y' in st.session_state:
+                    fig, accuracy = kmeans(k, st.session_state.X, st.session_state.y)
+                    st.pyplot(fig)
+                    st.write(f"Accuracy: {accuracy:.2f}")
+                elif classification_algorithm== 'GMM':
+                    pass
         if not classification_selected and not clustering_selected:
             st.warning("Please select at least one problem type.")
 

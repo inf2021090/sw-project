@@ -1,8 +1,9 @@
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
+
+import matplotlib.pyplot as plt
 
 # Overfiting after 6
 def knn(k, X, y):
@@ -34,5 +35,4 @@ def knn(k, X, y):
     fig.colorbar(scatter, ax=ax, label='Predicted Label')
     plt.grid(True)
     
-    # Return the figure and accuracy
     return fig, accuracy
