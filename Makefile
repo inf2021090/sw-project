@@ -1,32 +1,42 @@
-# Name of the Conda environment
-ENV_NAME = myenv
+# Makefile for compiling LaTeX document and managing the docs directory
 
-# Conda environment file
-ENV_FILE = environment.yml
+LATEX = pdflatex
+BIBTEX = bibtex
+REPORT = inf2021090_project_report.tex
+BIBFILE = references.bib
+OUTPUT = inf2021090_project_report.pdf
 
-# Requirements file
-REQ_FILE = requirements.txt
+.PHONY: all clean clear_docs
 
-.PHONY: all create_env install delete_env update_reqs run
+all: $(OUTPUT)
 
-# Create Conda environment
+$(OUTPUT): $(REPORT) $(BIBFILE)
+	$(LATEX) $(REPORT)
+	$(BIBTEX) $(basename $(REPORT))
+	$(LATEX) $(REPORT)
+	$(LATEX) $(REPORT)
+
+clean:
+	rm -f *.aux *.log *.bbl *.blg *.out *.toc
+
+clear_docs:
+	find docs -type f ! -name $(REPORT) ! -name $(BIBFILE) -delete
+
+
+# Create environment
 env:
-	conda env create -f $(ENV_FILE) --name $(ENV_NAME)
+	python -m venv
 
-# Install dependencies
-install:
-	conda activate $(ENV_NAME) && pip install -r $(REQ_FILE)
-
-# Delete Conda environment
+# Delete environment
 delete:
-	conda remove --name $(ENV_NAME) --all -y
+	rm -rf venv
 
-# Update requirements.txt
-update:
-	conda activate $(ENV_NAME) && pip freeze > $(REQ_FILE)
+# Activate environment
+activate:
+	source /venv/bin/activate
 
 # Run the Streamlit app
 run:
-	conda activate $(ENV_NAME) && streamlit run app.py
+	 streamlit run src/app.py
 
 
