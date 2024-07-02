@@ -118,9 +118,14 @@ def main():
                 if 'X' in st.session_state and 'y' in st.session_state:
                     fig, accuracy = kmeans(k, st.session_state.X, st.session_state.y)
                     st.pyplot(fig)
-                    st.write(f"Accuracy: {accuracy:.2f}")
-                elif classification_algorithm== 'GMM':
-                    pass
+                    st.write(f"Adjusted Rand Index: {ari:.2f}")
+            elif clustering_algorithm== 'GMM':
+                n_components = st.slider("Select number of components for GMM", 1, 15, 3)
+                st.write('Number of components is:', n_components)
+                if 'X' in st.session_state and 'y' in st.session_state:
+                    fig, ari = gmm(n_components, st.session_state.X, st.session_state.y)
+                    st.pyplot(fig)
+                    st.write(f"Adjusted Rand Index: {ari:.2f}")
         if not classification_selected and not clustering_selected:
             st.warning("Please select at least one problem type.")
 
