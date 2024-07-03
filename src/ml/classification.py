@@ -44,7 +44,7 @@ def knn(k, X, y):
 
 def random_forest(X, y):
     # Split dataset into training set and test set
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) 
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0) 
 
     # Create Random Forest classifier object
     clf = RandomForestClassifier(n_estimators=100, random_state=1)
@@ -70,15 +70,15 @@ def random_forest(X, y):
 
     return accuracy, buf
 
-def decision_tree(X, y):
+def decision_tree(X, y, max_depth=None):
     # Split dataset into training set and test set
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) 
 
-    # Create Decision Tree classifier object
-    clf = DecisionTreeClassifier()
+    # Create Decision Tree classifier object with the given max_depth
+    clf = DecisionTreeClassifier(max_depth=max_depth)
 
     # Train Decision Tree classifier
-    clf = clf.fit(X_train, y_train)
+    clf.fit(X_train, y_train)
 
     # Predict the response for test dataset
     y_pred = clf.predict(X_test)
