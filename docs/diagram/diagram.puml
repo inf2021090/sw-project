@@ -1,0 +1,49 @@
+@startuml MyMLApplicationDiagram
+!define RECTANGLE class
+
+RECTANGLE App {
+    +main(): void
+    +display_data(data: DataFrame): void
+    +split_data(data: DataFrame): (DataFrame, DataFrame)
+}
+
+RECTANGLE Utils.DataLoader {
+    +load_data(file: File): DataFrame
+}
+
+RECTANGLE Utils.Info {
+    +display_info(): void
+}
+
+RECTANGLE Utils.AlgorithmComparison {
+    +compare_classifiers(knn_acc: float, dt_acc: float): String
+    +compare_clusters(ari_km: float, ari_gmm: float): String
+}
+
+RECTANGLE ML.DataVisualization {
+    +pca_plot(X: DataFrame, y: Series): void
+    +lda_plot(X: DataFrame, y: Series): void
+    +correlation_heatmap(data: DataFrame): void
+    +pair_plot(data: DataFrame): void
+    +box_plot(data: DataFrame): void
+    +distribution_plot(data: DataFrame): void
+}
+
+RECTANGLE ML.Classification {
+    +knn(k: int, X: DataFrame, y: Series): (Figure, float)
+    +decision_tree(X: DataFrame, y: Series, max_depth: int): (float, BytesIO)
+    +random_forest(X: DataFrame, y: Series): (float, BytesIO)
+}
+
+RECTANGLE ML.Clustering {
+    +kmeans(k: int, X: DataFrame, y: Series): (Figure, float)
+    +gmm(n_components: int, X: DataFrame, y: Series): (Figure, float)
+}
+
+App --> "1..*" Utils.DataLoader
+App --> "1..*" Utils.Info
+App --> "1..*" Utils.AlgorithmComparison
+App --> "1..*" ML.DataVisualization
+App --> "1..*" ML.Classification
+App --> "1..*" ML.Clustering
+@enduml
