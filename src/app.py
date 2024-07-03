@@ -3,6 +3,7 @@ import pandas as pd
 
 from utils.data_loader import load_data
 from utils.info import display_info
+from utils.algorithm_comparison import *
 from ml.data_visualization import *
 from ml.classification import *
 from ml.clustering import *
@@ -102,20 +103,20 @@ def main():
 
             if 'X' in st.session_state and 'y' in st.session_state:
                 # Execute KNN
-                #k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
-                #st.write('K is:', k)
-                #fig_knn, accuracy_knn = knn(k, st.session_state.X, st.session_state.y)
-                #st.pyplot(fig_knn)
-                accuracy_rf, fig_dt_buf = random_forest(st.session_state.X, st.session_state.y)
-                st.image(fig_dt_buf, caption='Random Forest Visualization', use_column_width=True)
-                st.write(f"Random Forest Accuracy: {accuracy_rf:.5f}")
+                k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
+                fig_knn, accuracy_knn = knn(k, st.session_state.X, st.session_state.y)
+                st.pyplot(fig_knn)
+                st.write(f"KNN Accuracy: {accuracy_knn:.5f}")
 
-            if 'X' in st.session_state and 'y' in st.session_state:
                 # Execute Decision Trees
-                accuracy_dt, fig_dt_buf = decision_tree(st.session_state.X, st.session_state.y)
-                #st.image(fig_dt.create_png(), caption='Decision Tree Visualization', use_column_width=True)
+                max_depth = st.slider("Select max depth of the tree for Decision Tree", 1, 15, 3)
+                accuracy_dt, fig_dt_buf = decision_tree(st.session_state.X, st.session_state.y, max_depth)
                 st.image(fig_dt_buf, caption='Decision Tree Visualization', use_column_width=True)
                 st.write(f"Decision Trees Accuracy: {accuracy_dt:.5f}")
+
+                # Make comparison
+                result = compare_classifiers(accuracy_knn,accuracy_dt)
+                st.write(result)
 
             else:
                 st.warning("Please upload data and split it before running Classification.")
@@ -137,6 +138,10 @@ def main():
                 fig_gmm, ari_gmm = gmm(n_components, st.session_state.X, st.session_state.y)  
                 st.pyplot(fig_gmm)
                 st.write(f"GMM Adjusted Rand Index: {ari_gmm:.5f}")
+
+                # Make comparison
+                result = compare_clusters(ari_km, ari_gmm)
+                st.write(result)
 
             else:
                 st.warning("Please upload data before running Clustering.")
