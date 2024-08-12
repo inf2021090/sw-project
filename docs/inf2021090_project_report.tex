@@ -1,0 +1,44 @@
+\documentclass[a4paper,12pt,twoside]{report}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+\usepackage[greek,english]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\newcommand{\submitdate}{\gr{Σεπτέμβριος 2024}}
+
+\newcommand{\gr}{\selectlanguage{greek}}
+\newcommand{\en}{\selectlanguage{english}}
+
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/ionio.png} 
+    \vspace{1cm}
+    
+    {\huge\bfseries \gr{Αναφορά Εργασίας στην Τεχνολογία Λογισμικού}\par} 
+    \vspace{2cm}
+    
+    {\Large \gr{Όνομα: Κωνσταντίνος Καφτεράνης}\par} 
+    \vspace{0.5cm}
+    
+    {\Large \gr{ΑΜ: \en{inf2021090}}\par} 
+    \vfill
+    
+    {\large \submitdate\par} 
+\end{titlepage}
+
+\renewcommand{\contentsname}{\gr{Περιεχόμενα}} 
+\tableofcontents
+
+\section{\gr{Εισαγωγή}}
+\section{\gr{Μεθοδολογία Υλοποίησης}} 
+\section{\gr{Δομή Εφαρμογής}} 
+\section{\gr{Παρουσίαση Εφαρμογής}}
+\section{\gr{Χρήση μέσω }\en{Docker}}
+\section{\gr{Ομάδα}}
+\section{\gr{Κώδικας}}
+
+\end{document}
