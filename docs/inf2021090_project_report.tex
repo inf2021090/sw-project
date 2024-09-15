@@ -3,6 +3,7 @@
 \usepackage[greek,english]{babel}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -10,6 +11,9 @@
     filecolor=blue,
     urlcolor=blue,
 }
+
+\setcounter{tocdepth}{3}  
+\setcounter{secnumdepth}{3} 
 
 \newcommand{\submitdate}{\gr{Σεπτέμβριος 2024}}
 
@@ -44,9 +48,9 @@
 
 \gr{Για την εργασία του μαθήματος Τεχνολογία Λογισμικού, δημιουργήθηκε μια διαδικτυακή εφαρμογή μηχανικής μάθησης για την ανάλυση δεδομένων. Η υλοποίηση πραγματοποιήθηκε με τη γλώσσα προγραμματισμού} \en{Python} \gr{χρησιμοποιώντας τη βιβλιοθήκη} \en{Streamlit} \gr{καθώς και άλλες βιβλιοθήκες μηχανικής μάθησης όπως} \en{Scikit-learn, Pandas} \gr{και} \en{Matplotlib}. \gr{Η εφαρμογή ενσωματώνει διάφορους αλγορίθμους μηχανικής μάθησης για κατηγοριοποίηση και ομαδοποίηση, ενώ προσφέρει δυνατότητες οπτικοποίησης των δεδομένων μέσω γραφημάτων και διαγραμμάτων. Η εφαρμογή παρέχει μια φιλική προς τον χρήστη διεπαφή για τη φόρτωση δεδομένων, την επεξεργασία τους και την εξαγωγή πολύτιμων πληροφοριών μέσω στατιστικής ανάλυσης και οπτικοποίησης.}
 
-\section{\gr{Μεθοδολογία Υλοποίησης}} 
+\section{\gr{Μεθοδολογία Υλοποίησης - ΚλυκλοςΖωής Λογισμικού}} 
 
-\subsection{\gr{Μοντέλο Επαναληπτικής Ανάπτυξης}}
+\subsection{\gr{Μοντέλο Επαναληπτικής Ανάπτυξης} \en{(Iterative Model)}}
 \gr{Το Μοντέλο Επαναληπτικής Ανάπτυξης είναι μια ευέλικτη προσέγγιση ανάπτυξης λογισμικού που βασίζεται στη συνεχή βελτίωση του λογισμικού μέσα από επαναλαμβανόμενες φάσεις ανάπτυξης.}
 \begin{itemize}
     \item \gr{Ξεκινάει με τη συλλογή των απαιτήσεων και την ανάλυση των αναγκών του έργου.}
@@ -65,16 +69,92 @@
 %    \label{fig:my_figure} % Optional: 
 \end{figure}
 
-\subsection{\en{ML}}
-\subsection{\en{Utils}}
 \subsection{\en{App}}
+
+\subsubsection{\en{display\_data}}
+\begin{itemize}
+    \item \gr{Η συνάρτηση} \en{display\_data} \gr{εμφανίζει τον πίνακα δεδομένων στην εφαρμογή.}
+    \item \gr{Συγκεκριμένα, χρησιμοποιεί την} \en{st.write} \gr{για να προβάλλει τα δεδομένα στην πλευρική γραμμή της εφαρμογής.}
+\end{itemize}
+
+\subsubsection{\en{split\_data}}
+\begin{itemize}
+    \item \gr{Η συνάρτηση} \en{split\_data} \gr{διαχωρίζει τα δεδομένα σε χαρακτηριστικά (} \en{X} \gr{) και στόχο (} \en{y} \gr{).}
+    \item \gr{Τα χαρακτηριστικά περιλαμβάνουν όλες τις στήλες εκτός από την τελευταία, ενώ η τελευταία στήλη θεωρείται η μεταβλητή στόχος.}
+    \item \gr{Εμφανίζει τα χαρακτηριστικά και τη μεταβλητή στόχο στην εφαρμογή χρησιμοποιώντας την} \en{st.write} \gr{και επιστρέφει τα} \en{X} \gr{και} \en{y}.
+\end{itemize}
+
+\subsubsection{\en{main}}
+\begin{itemize}
+    \item \gr{Η συνάρτηση} \en{main} \gr{είναι η κύρια συνάρτηση της εφαρμογής και διαχειρίζεται την κύρια ροή της εφαρμογής.}
+    \item \gr{Διαχειρίζεται την πλοήγηση μέσω της \en{sidebar} της εφαρμογής και καλεί άλλες συναρτήσεις ανάλογα με την επιλεγμένη ενότητα.}
+    \item \gr{Η ενότητα} \en{Upload Data} \gr{φορτώνει και εμφανίζει δεδομένα από αρχεία \en{CSV} \gr{ή} \en{Excel.}}
+    \item \gr{Η ενότητα} \en{Data Visualization} \gr{επιτρέπει την απεικόνιση των δεδομένων με διάφορους τύπους γραφημάτων, όπως} \en{PCA} \gr{και} \en{LDA}.
+    \item \gr{Η ενότητα} \en{Machine Learning} \gr{εκτελεί αλγορίθμους μηχανικής μάθησης, όπως} \en{KNN} \gr{και} \en{Decision Trees} \gr{για ταξινόμηση, και} \en{K-Means} \gr{και} \en{GMM} \gr{για ομαδοποίηση.}
+    \item \gr{Η ενότητα} \en{Information} \gr{καλεί τη συνάρτηση} \en{display\_info} \gr{για να εμφανίσει πληροφορίες σχετικά με την εφαρμογή.}
+\end{itemize}
+
+\subsection{\en{ML}}
+\subsubsection{\en{Clustering}}
+\gr{Η ομαδοποίηση είναι μια μη επιβλεπόμενη τεχνική μηχανικής μάθησης που έχει ως στόχο να βρει ομάδες ή συσσωματώματα παρόμοιων δεδομένων. Εδώ είναι μερικές από τις χρησιμοποιούμενες μεθόδους:}
+
+\begin{itemize}
+    \item \textbf{\en{K-Means Clustering}}: \gr{Η συνάρτηση} \en{`kmeans`} \gr{χρησιμοποιεί τον αλγόριθμο} \en{K-Means} \gr{για να ομαδοποιήσει τα δεδομένα σε} \en{\( k \)} \gr{ομάδες. Τα δεδομένα κανονικοποιούνται και στη συνέχεια γίνεται πρόβλεψη των συστάδων για το δοκιμαστικό σύνολο δεδομένων. Ο υπολογισμός του προσαρμοσμένου δείκτη Rand (ARI) χρησιμοποιείται για την αξιολόγηση της ακρίβειας.}
+
+    \item \textbf{\en{Gaussian Mixture Model (GMM)}}: \gr{Η συνάρτηση} \en{`gmm`} \gr{εφαρμόζει το μοντέλο} \en{Gaussian Mixture} \gr{για να εντοπίσει συστάδες με βάση την κανονική κατανομή των δεδομένων. Το αποτέλεσμα αξιολογείται επίσης μέσω του προσαρμοσμένου δείκτη \en{Rand (ARI).}}
+\end{itemize}
+
+\subsubsection{\en{Classification}}
+\gr{Η κατηγοριοποίηση είναι η διαδικασία της ανάθεσης μιας ετικέτας σε κάθε δείγμα βάσει των χαρακτηριστικών του. Μερικές από τις χρησιμοποιούμενες μεθόδους περιλαμβάνουν:}
+
+\begin{itemize}
+    \item \en{K-Nearest Neighbors (KNN)}: \gr{Η συνάρτηση} \en{`knn`} \gr{υλοποιεί τον αλγόριθμο} \en{K-Nearest Neighbors (KNN)} \gr{για την κατηγοριοποίηση των δεδομένων. Ο αλγόριθμος βασίζεται στους πιο κοντινούς γείτονες ενός δείγματος για να προσδιορίσει την κλάση του.}
+
+    \item \en{Decision Tree}: \gr{Η συνάρτηση} \en{`decision_tree`} \gr{χρησιμοποιεί τον αλγόριθμο} \en{Decision Tree} \gr{για την κατηγοριοποίηση των δεδομένων. Το μοντέλο εκπαιδεύεται και οπτικοποιείται το} \en{decision tree} \gr{για να εμφανιστεί πώς λαμβάνονται οι αποφάσεις.}
+
+    \item \en{Random Forest}: \gr{Η συνάρτηση} \en{`random_forest`} \gr{εφαρμόζει τον αλγόριθμο} \en{Random Forest} \gr{, ο οποίος συνδυάζει πολλά} \en{decision trees} \gr{για να βελτιώσει την ακρίβεια της κατηγοριοποίησης. Ο αλγόριθμος οπτικοποιεί ένα από τα δέντρα του δάσους για ανάλυση.}
+\end{itemize}
+
+\subsubsection{\en{Visualization}}
+\gr{Η οπτικοποίηση των δεδομένων είναι σημαντική για την κατανόηση της δομής και των σχέσεων που υπάρχουν στα δεδομένα. Μερικές από τις διαθέσιμες μεθόδους περιλαμβάνουν:}
+
+\begin{itemize}
+    \item \en{PCA (Principal Component Analysis)}: \gr{Η συνάρτηση} \en{pca\_plot} \gr{χρησιμοποιεί την} \en{PCA} \gr{για τη μείωση των διαστάσεων των δεδομένων και την απεικόνισή τους σε έναν δισδιάστατο χώρο, διατηρώντας όσο το δυνατόν περισσότερη πληροφορία.}
+
+    \item \en{LDA (Linear Discriminant Analysis)}: \gr{Η συνάρτηση} \en{lda\_plot} \gr{εφαρμόζει την} \en{LDA} \gr{για την απεικόνιση των δεδομένων σε δύο διαστάσεις, διαχωρίζοντας τις κλάσεις με βάση τα γραμμικά διακριτικά.}
+
+    \item \en{Correlation Heatmap}: \gr{Η συνάρτηση} \en{correlation\_heatmap} \gr{δημιουργεί έναν θερμικό χάρτη που εμφανίζει τις συσχετίσεις μεταξύ των αριθμητικών χαρακτηριστικών ενός συνόλου δεδομένων.}
+
+    \item \en{Box Plot}: \gr{Η συνάρτηση} \en{box\_plot} \gr{δημιουργεί ένα} \en{box plot} \gr{για να εμφανίσει την κατανομή των αριθμητικών δεδομένων και να εντοπίσει πιθανές ακραίες τιμές.}
+
+    \item \en{Pair Plot}: \gr{Η συνάρτηση} \en{pair\_plot} \gr{απεικονίζει ζεύγη μεταβλητών για να εξετάσει τις σχέσεις τους μεταξύ τους.}
+
+    \item \en{Distribution Plot}: \gr{Η συνάρτηση} \en{distribution\_plot} \gr{εμφανίζει την κατανομή των χαρακτηριστικών σε ένα σύνολο δεδομένων, συνδυάζοντας ιστογράμματα και καμπύλες πυκνότητας.}
+\end{itemize}
+
+\subsection{\en{Utils}}
+
+\subsubsection{\en{Data Loading}}
+\gr{Η συνάρτηση} \en{load\_data} \gr{φορτώνει δεδομένα από διάφορους τύπους αρχείων και ελέγχει αν είναι} \en{CSV} \gr{ή} \en{Excel}. \gr{Επιστρέφει τα δεδομένα ή ένα μήνυμα σφάλματος.}
+
+\subsubsection{\en{Classifier Comparison}}
+\gr{Η συνάρτηση} \en{compare\_classifiers} \gr{συγκρίνει τις επιδόσεις των αλγορίθμων} \en{K-Nearest Neighbors (KNN)} \gr{και} \en{Decision Tree (DT)} \gr{και εμφανίζει προειδοποιήσεις για ενδεχόμενη υπερεκπαίδευση.}
+
+
+
+\subsubsection{\en{Cluster Comparison}}
+\gr{Η συνάρτηση} \en{compare\_clusters} \gr{συγκρίνει τις επιδόσεις των αλγορίθμων} \en{K-Means} \gr{και} \en{Gaussian Mixture Model (GMM)} \gr{με βάση τον προσαρμοσμένο δείκτη Rand (ARI), και εμφανίζει προειδοποιήσεις για ενδεχόμενο υπερεκπαίδευση.}
+
+\subsubsection{\en{App Information}}
+\gr{Πληροφορίες Εφαρμογής}
 
 \section{\gr{Παρουσίαση Εφαρμογής}}
 
-\gr{Παρακάτω εξηγείται πώς χρησιμοποιούμε την εφαρμογή. Κατά την είσοδο στην εφαρμογή, ο χρήστης έρχεται σε επαφή με το UI, το οποίο περιλαμβάνει ένα widget για ανέβασμα αρχείων, καθώς και ένα sidebar menu που χρησιμοποιεί για να περιηγηθεί στην εφαρμογή.}
+\subsubsection{\en{Navigation}}
+\gr{Παρακάτω εξηγείται πώς χρησιμοποιούμε την εφαρμογή. Κατά την είσοδο στην εφαρμογή, ο χρήστης έρχεται σε επαφή με το \en{UI}, το οποίο περιλαμβάνει ένα widget για ανέβασμα αρχείων, καθώς και ένα sidebar menu που χρησιμοποιεί για να περιηγηθεί στην εφαρμογή.}
 
 % Εικόνα για Οθόνη Έναρξης
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/opening.png} 
     \caption{\gr{Οθόνη Έναρξης}}
@@ -82,17 +162,18 @@
 \end{figure}
 
 % Εικόνα για Μενού
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/menu.png} 
     \caption{\gr{Μενού}}
     \label{fig:menu}
 \end{figure}
 
+\subsubsection{\gr{Φόρτωση Δεδομένων}}
 \gr{Τα αρχεία δεδομένων πρέπει να είναι της μορφής} \en{Excel} \gr{ή} \en{CSV}\gr{, αλλιώς η εφαρμογή δεν θα επιτρέψει το ανέβασμά τους και θα ζητήσει από τον χρήστη να τα ανεβάσει ξανά.}
 
 % Εικόνα για Φόρτωση Δεδομένων
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/data.png}
     \caption{\gr{Φόρτωση Δεδομένων}}
@@ -101,23 +182,15 @@
 
 \gr{Αφού το αρχείο ανέβει, εμφανίζονται τα δεδομένα χωρισμένα σε χαρακτηριστικά} (\en{features}) \gr{και ετικέτες.}
 
-% Δεδομένa
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/data.png}
-    \caption{\gr{Δεδομένα}}
-    \label{fig:data}
-\end{figure}
-
 \gr{Στο μενού, ο χρήστης μπορεί να επιλέξει την επεξεργασία που θα εφαρμόσει στα δεδομένα: οπτικοποίηση, εφαρμογή μηχανικής μάθησης ή τη σελίδα με τις οδηγίες.}
 
 \gr{Αν επιστρέψει στο ανέβασμα αρχείων, τότε τα δεδομένα χάνονται και ζητείται να ανέβει ένα καινούργιο αρχείο.}
 
-
+\subsubsection{\gr{Οπτικοποίση}}
 \gr{Επιλέγοντας οπτικοποίηση, ο χρήστης έχει δύο δυνατότητες. Από ένα} \en{dropdown menu} \gr{επιλέγει είτε τον αλγόριθμο} \en{PCA} \gr{ή} \en{LDA} \gr{και να δημιουργήσει ένα διάγραμμα, καθώς επίσης και μερικά διαγράμματα επεξηγηματικών δεδομένων, τα οποία θα εμφανιστούν κάθετα κάτω από το διάγραμμα του αλγορίθμου οπτικοποίησης. Τα διαγράμματα αυτά είναι:}
 
 % Εικόνα για Οπτικοποίηση Δεδομένων
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/vizualization.png} 
     \caption{\gr{Οπτικοποίηση Δεδομένων}}
@@ -125,31 +198,41 @@
 \end{figure}
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/lda.png} 
     \caption{\gr{Ο αλγόριθμος \en{LDA}}}
     \label{fig:data_visualization_lda}
 \end{figure}
+
+\subsubsection{\en{Classification}}
 \gr{Όσον αφορά τη μηχανική μάθηση, ο χρήστης μπορεί να επιλέξει ανάμεσα σε δύο προβλήματα,} \en{classification} \gr{και} \en{clustering}\gr{, τσεκάροντας το αντίστοιχο κυκλάκι. Στην περίπτωση της κατηγοριοποίησης, ο χρήστης επιλέγει μεταξύ των αλγορίθμων} \en{k-means} \gr{και} \en{decision tree}\gr{. Σε κάθε περίπτωση, χρησιμοποιεί μια μπάρα για να επιλέξει το} \en{k}\gr{, και εφαρμόζονται και οι δύο αλγόριθμοι. Τα αποτελέσματα συγκρίνονται με βάση τον δείκτη} \en{accuracy} \gr{για να αξιολογηθεί η επίδοσή τους. Τις περισσότερες φορές, το} \en{decision tree} \gr{υπερέχει του} \en{k-nearest neighbors (KNN)}\gr{, καθώς για μερικές τιμές του} \en{k} \gr{το} \en{KNN} \gr{υπερπροσαρμόζεται} (\en{overfits})\gr{. Εμφανίζεται μήνυμα που προειδοποιεί τον χρήστη να επιλέξει τον κατάλληλο αλγόριθμο κάθε φορά.}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/knn.png} 
+    \caption{\gr{KNN}}
+    \label{fig:knn}
+\end{figure}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/tree.png} 
     \caption{\gr{Δ'εντρο Επιλογής}}
     \label{fig:tree}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/overfits.png} 
+    \includegraphics[width=0.8\textwidth]{images/overfit.png} 
     \caption{\gr{Υπερπροσαρμογή}}
-    \label{fig:overfits}
+    \label{fig:overfit}
 \end{figure}
 
+\subsubsection{\en{Clustering}}
 \gr{Όσον αφορά το} \en{clustering}\gr{, ο χρήστης μπορεί να επιλέξει μεταξύ των αλγορίθμων} \en{Gaussian Mixture Model (GMM)} \gr{και} \en{k-means}\gr{. Κανένας από τους δύο αλγορίθμους δεν υπερπροσαρμόζεται} (\en{overfits})\gr{, αλλά η απόδοσή τους μπορεί να διαφέρει ανάλογα με τα δεδομένα. Σε ορισμένες περιπτώσεις, το} \en{GMM} \gr{αποδίδει καλύτερα, ενώ σε άλλες το} \en{k-means} \gr{είναι πιο αποδοτικό. Για τη σύγκριση των αποτελεσμάτων χρησιμοποιείται ο δείκτης} \en{Adjusted Rand Index (ARI)}\gr{, ο οποίος επιτρέπει την αξιολόγηση της ποιότητας των ομάδων που δημιουργούνται από κάθε αλγόριθμο.}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{images/clustering.png} 
     \caption{\en{Clustering}}
@@ -162,7 +245,7 @@
     \item \gr{Η εικόνα} \en{Python 3.9 Slim} \gr{χρησιμοποιείται ως βάση.}
     \item \en{Working directory to} \texttt{/app}.
     \item \gr{Αντιγράφει το αρχείο} \en{requirements.txt} \gr{στο κοντέινερ.}
-    \item \gr{Κατεβάζει τα πακέτα από} \en{requirements.txt} \en{χωρις} \gr{caching.}
+    \item \gr{Κατεβάζει τα πακέτα από} \en{requirements.txt} \en{χωρις} \en{caching.}
     \item \gr{Αντιγράφει τον φάκελο} \en{src/} \gr{στο κοντέινερ.}
     \item \en{Exposes port 8501 for the app.}
     \item \gr{Η εντολή} \en{CMD} \gr{τρέχει την εφαρμογή} \en{Streamlit} \gr{στην πόρτα 8501, ώστε να είναι προσβάσιμη.}
@@ -174,16 +257,17 @@
     \item \gr{Εκτελέστε την εντολή} \en{\ \texttt{docker build -t my-streamlit-app .}} \gr{για να δημιουργήσετε την εικόνα.}
     \item \gr{Εκτελέστε την εντολή} \en{\ \texttt{docker run -p 8501:8501 my-streamlit-app}} \gr{για να τρέξετε την εφαρμογή στη διεύθυνση} \en{\ \texttt{http://localhost:8501}}.
 \end{itemize}
-\section{\gr{Ομάδα}}
-\section{\gr{Κώδικας}}
+
+\section{\gr{Σύνδεσμοι Κώδικα,Αναφοράς \& Διαγράμματος}}
 
 \begin{itemize}
     \item \en{\href{https://github.com/inf2021090/sw-project}{Project GitHub Repository}} 
     \item \en{\href{https://github.com/inf2021090}{GitHub Profile}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/tree/main/src}{Source Code}} 
-    \item \en{\href{https://github.com/your-repo/raw-latex-file.tex}{Report Raw LaTeX File}} 
-    \item \en{\href{https://github.com/your-repo/report.pdf}{Report PDF}} 
+    \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/inf2021090_project_report.tex}{Report Raw LaTeX File}} 
+    \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/inf2021090_project_report.pdf}{Report PDF}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/diagram/diagram.png}{UML Diagram}} 
+    \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/diagram/diagram.puml}{UML Diagram Code}} 
 \end{itemize}
 
 \end{document}
