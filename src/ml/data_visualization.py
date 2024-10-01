@@ -1,6 +1,9 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import umap
+from umap import UMAP
+
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
@@ -24,23 +27,29 @@ def pca_plot(X, y):
     plt.ylabel('Principal Component 2')
     plt.legend()
     st.pyplot(plt)
-
-def lda_plot(X, y):
+    
+def umap_plot(X, y):
+    # Step 1: Scale the data
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    lda = LDA(n_components=2)
-    X_lda = lda.fit_transform(X_scaled, y)
+    # Step 2: Apply UMAP
+    reducer = umap.UMAP(n_components=2, random_state=42)
+    X_umap = reducer.fit_transform(X_scaled)
 
+    # Step 3: Plot the UMAP-reduced data
     plt.figure(figsize=(10, 8))
     for label in np.unique(y):
-        plt.scatter(X_lda[y == label, 0], X_lda[y == label, 1], label=label)
+        plt.scatter(X_umap[y == label, 0], X_umap[y == label, 1], label=label)
 
-    plt.title('LDA Plot')
-    plt.xlabel('Linear Discriminant 1')
-    plt.ylabel('Linear Discriminant 2')
+    plt.title('UMAP Plot')
+    plt.xlabel('UMAP 1')
+    plt.ylabel('UMAP 2')
     plt.legend()
+    
+    # Step 4: Display the plot in Streamlit
     st.pyplot(plt)
+
 
 def correlation_heatmap(data):
     numeric_data = data.select_dtypes(include=[np.number])
