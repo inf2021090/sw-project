@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from streamlit_option_menu import option_menu
 
 from utils.data_loader import load_data
 from utils.info import display_info
@@ -7,11 +8,13 @@ from utils.algorithm_comparison import *
 from ml.data_visualization import *
 from ml.classification import *
 from ml.clustering import *
+from ml.feature_selection import *
 
 
 def display_data(data):
     st.write("Data Table:")
     st.write(data)
+
 
 def split_data(data):
     X = data.iloc[:, :-1]  # All columns except the last one are features
@@ -20,18 +23,26 @@ def split_data(data):
     st.write("Features (X):")
     st.write(X)
 
-    st.write("Target variable (y):")
+    st.write("Labels (y):")
     st.write(y)
 
     return X, y
 
+
 def main():
     st.title('Super Cool ML Application')
 
-    # Sidebar navigation
-    st.sidebar.title('Navigation')
-    page = st.sidebar.radio("Go to", ('Upload Data', 'Data Visualization', 'Machine Learning', 'Information'))
+    # Option menu for navigation
+    page = option_menu(
+        menu_title="Navigation",
+        options=["Upload Data", "Data Visualization", "Feature Selection", "Machine Learning", "Information"],
+        icons=["upload", "bar-chart-line", "check-circle", "robot", "info-circle"],
+        menu_icon="cast",
+        default_index=0,
+        orientation="horizontal",
+    )
 
+    # Page: Upload Data
     if page == 'Upload Data':
         st.title('Data Upload and Display')
 
@@ -70,8 +81,7 @@ def main():
         else:
             st.title("2D Visualization")
 
-            # Choose a visualization type
-            option = st.selectbox("Select Algorithm", ["None", "PCA Plot", "LDA Plot"])
+            option = st.selectbox("Select Algorithm", ["None", "PCA Plot", "UMAP Plot"])
 
             if option == 'PCA Plot':
                 if 'X' in st.session_state and 'y' in st.session_state:
@@ -81,73 +91,91 @@ def main():
                     distribution_plot(st.session_state.data)
                 else:
                     st.warning("Please upload data and split it before visualizing.")
-
-            elif option == 'LDA Plot':
+            elif option == 'UMAP Plot':
                 if 'X' in st.session_state and 'y' in st.session_state:
-                    lda_plot(st.session_state.X, st.session_state.y)
+                    umap_plot(st.session_state.X, st.session_state.y)
                     correlation_heatmap(st.session_state.data)
                     box_plot(st.session_state.data)
                     distribution_plot(st.session_state.data)
                 else:
                     st.warning("Please upload data and split it before visualizing.")
 
-    elif page == 'Machine Learning':
+    if page == 'Machine Learning':
         st.title('Machine Learning')
-        st.write('Select problem(s): ')
-
-        # Choose a Machine Learning Problem
-        problem_type = st.radio('Select Problem Type', ('Classification', 'Clustering'))
+        problem_type = 'Classification'
 
         if problem_type == 'Classification':
-            st.write('Executing both Random Forests and Decision Trees for Classification...')
+            st.write('Executing KNN and SVM for Classification...')
 
             if 'X' in st.session_state and 'y' in st.session_state:
-                # Execute KNN
+                # KNN Classification
                 k = st.slider("Select number of neighbors (k) for K-Nearest Neighbors", 1, 15, 3)
-                fig_knn, accuracy_knn = knn(k, st.session_state.X, st.session_state.y)
-                st.pyplot(fig_knn)
-                st.write(f"KNN Accuracy: {accuracy_knn:.5f}")
+                
+                # KNN on original data
+                accuracy_knn, f1_knn, roc_auc_knn = knn(k, st.session_state.X, st.session_state.y)
+                st.write(f"KNN Accuracy (Original): {accuracy_knn:.5f}")
+                st.write(f"KNN F1 Score (Original): {f1_knn:.5f}")
+                if roc_auc_knn is not None:
+                    st.write(f"KNN ROC-AUC (Original): {roc_auc_knn:.5f}")
 
-                # Execute Decision Trees
-                max_depth = st.slider("Select max depth of the tree for Decision Tree", 1, 15, 3)
-                accuracy_dt, fig_dt_buf = decision_tree(st.session_state.X, st.session_state.y, max_depth)
-                st.image(fig_dt_buf, caption='Decision Tree Visualization', use_column_width=True)
-                st.write(f"Decision Trees Accuracy: {accuracy_dt:.5f}")
+                # KNN on reduced data if available
+                if 'X_selected' in st.session_state:
+                    accuracy_knn_selected, f1_knn_selected, roc_auc_knn_selected = knn(k, st.session_state.X_selected, st.session_state.y)
+                    st.write(f"KNN Accuracy (Reduced): {accuracy_knn_selected:.5f}")
+                    st.write(f"KNN F1 Score (Reduced): {f1_knn_selected:.5f}")
+                    if roc_auc_knn_selected is not None:
+                        st.write(f"KNN ROC-AUC (Reduced): {roc_auc_knn_selected:.5f}")
 
-                # Make comparison
-                result = compare_classifiers(accuracy_knn,accuracy_dt)
-                st.write(result)
+                # SVM Classification
+                kernel_option = st.selectbox("Select SVM Kernel", ["linear", "poly", "rbf"])
+                C_value = st.slider("Select Regularization parameter (C) for SVM", 0.1, 10.0, 1.0)
+
+                # SVM on original data
+                accuracy_svm, f1_svm, roc_auc_svm = svm(st.session_state.X, st.session_state.y, kernel=kernel_option, C=C_value)
+                st.write(f"SVM Accuracy (Original): {accuracy_svm:.5f}")
+                st.write(f"SVM F1 Score (Original): {f1_svm:.5f}")
+                if roc_auc_svm is not None:
+                    st.write(f"SVM ROC-AUC (Original): {roc_auc_svm:.5f}")
+
+                # SVM on reduced data if available
+                if 'X_selected' in st.session_state:
+                    # Check if X_selected has at least two features
+                    if st.session_state.X_selected.shape[1] == 2:
+                        accuracy_svm_selected, f1_svm_selected, roc_auc_svm_selected = svm(st.session_state.X_selected, st.session_state.y, kernel=kernel_option, C=C_value)
+                        st.write(f"SVM Accuracy (Reduced): {accuracy_svm_selected:.5f}")
+                        st.write(f"SVM F1 Score (Reduced): {f1_svm_selected:.5f}")
+                        if roc_auc_svm is not None:
+                            st.write(f"SVM ROC-AUC (Reduced): {roc_auc_svm_selected:.5f}")
+                    else:
+                        st.warning("Reduced dataset does not have 2 features for SVM visualization.")
+
 
             else:
                 st.warning("Please upload data and split it before running Classification.")
 
-        if problem_type == 'Clustering':
-            st.write('Executing both K-Means and Gaussian Mixture Model (GMM) for Clustering...')
+    elif page == 'Feature Selection':
+        st.title('Feature Selection')
+        
+        if 'X' in st.session_state and 'y' in st.session_state:
+            k = st.slider("Select number of features to retain", 1, st.session_state.X.shape[1], 5)  # Update this line
+            X_selected, selected_features = feature_selection(st.session_state.X, st.session_state.y, k)
 
-            if 'X' in st.session_state and 'y' in st.session_state:
-                # Execute K-Means
-                k = st.slider("Select number of clusters (k) for K-Means", 5, 15, 3)
-                st.write('K is:', k)
-                fig_km, ari_km = kmeans(k, st.session_state.X, st.session_state.y)  
-                st.pyplot(fig_km)
-                st.write(f"K-Means Adjusted Rand Index: {ari_km:.5f}")
+            # Display the reduced dataset
+            st.write("Reduced Dataset:")
+            st.write(X_selected)
 
-                # Execute GMM
-                n_components = st.slider("Select number of components for GMM", 1, 15, 3)
-                st.write('Number of components:', n_components)
-                fig_gmm, ari_gmm = gmm(n_components, st.session_state.X, st.session_state.y)  
-                st.pyplot(fig_gmm)
-                st.write(f"GMM Adjusted Rand Index: {ari_gmm:.5f}")
+            # Store the reduced dataset in session state for later use
+            st.session_state.X_selected = X_selected
+            st.session_state.selected_features = selected_features
 
-                # Make comparison
-                result = compare_clusters(ari_km, ari_gmm)
-                st.write(result)
+            st.success(f"Selected Features: {selected_features.tolist()}")
 
-            else:
-                st.warning("Please upload data before running Clustering.")
+        else:
+            st.warning("Please upload data and split it before running Feature Selection.")
 
     elif page == 'Information':
         display_info()
+
 
 if __name__ == '__main__':
     main()
