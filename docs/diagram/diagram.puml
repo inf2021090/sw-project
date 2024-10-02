@@ -1,49 +1,85 @@
 @startuml MyMLApplicationDiagram
-!define RECTANGLE class
 
-RECTANGLE App {
-    +main(): void
-    +display_data(data: DataFrame): void
-    +split_data(data: DataFrame): (DataFrame, DataFrame)
+class App {
+    - selected_tab: String
+    - uploaded_file: File
+    - data: DataTable
+    + run()
+    + load_data()
+    + visualize_data()
+    + perform_ml()
+    + show_info()
 }
 
-RECTANGLE Utils.DataLoader {
-    +load_data(file: File): DataFrame
+class DataLoader {
+    - data: DataTable
+    + load_data(file: File): DataFrame
 }
 
-RECTANGLE Utils.Info {
-    +display_info(): void
+class Visualization {
+    - data: DataTable
+    + PCA_plot()
+    + UMAP_plot()  ' Replaced LDA with UMAP
+    + EDA_histogram()
+    + EDA_scatter_plot()
 }
 
-RECTANGLE Utils.AlgorithmComparison {
-    +compare_classifiers(knn_acc: float, dt_acc: float): String
-    +compare_clusters(ari_km: float, ari_gmm: float): String
+class PCAPlot {
+    - data: DataTable
+    + visualize_plot()
 }
 
-RECTANGLE ML.DataVisualization {
-    +pca_plot(X: DataFrame, y: Series): void
-    +lda_plot(X: DataFrame, y: Series): void
-    +correlation_heatmap(data: DataFrame): void
-    +pair_plot(data: DataFrame): void
-    +box_plot(data: DataFrame): void
-    +distribution_plot(data: DataFrame): void
+class UMAPPlot {
+    - data: DataTable
+    + visualize_plot()
 }
 
-RECTANGLE ML.Classification {
-    +knn(k: int, X: DataFrame, y: Series): (Figure, float)
-    +decision_tree(X: DataFrame, y: Series, max_depth: int): (float, BytesIO)
-    +random_forest(X: DataFrame, y: Series): (float, BytesIO)
+class EDAHistogram {
+    - data: DataTable
+    + visualize_plot()
 }
 
-RECTANGLE ML.Clustering {
-    +kmeans(k: int, X: DataFrame, y: Series): (Figure, float)
-    +gmm(n_components: int, X: DataFrame, y: Series): (Figure, float)
+class EDAScatterPlot {
+    - data: DataTable
+    + visualize_plot()
 }
 
-App --> "1..*" Utils.DataLoader
-App --> "1..*" Utils.Info
-App --> "1..*" Utils.AlgorithmComparison
-App --> "1..*" ML.DataVisualization
-App --> "1..*" ML.Classification
-App --> "1..*" ML.Clustering
+Visualization --> PCAPlot : uses
+Visualization --> UMAPPlot : uses
+Visualization --> EDAHistogram : uses
+Visualization --> EDAScatterPlot : uses
+
+class MachineLearning {
+    - data: DataTable
+    + Classification
+    + FeatureSelection
+}
+
+class Classification {
+    - data: DataTable
+    + KNearestNeighbors
+    + SupportVectorMachine
+}
+
+class KNearestNeighbors {
+    - data: DataTable
+    + classify(data: DataFrame, features: List)
+}
+
+class SupportVectorMachine {
+    - data: DataTable
+    + classify(data: DataFrame, features: List)
+}
+
+class FeatureSelection {
+    - data: DataTable
+    + feature_selection(X: DataFrame, y: Series, k: int): (DataFrame, List[int])
+}
+
+' Define relationships
+App --> DataLoader : uses
+App --> Visualization : uses
+App --> MachineLearning : uses
+MachineLearning --> FeatureSelection : uses
+
 @enduml
