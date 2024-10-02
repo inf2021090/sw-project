@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{listings}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -62,9 +63,9 @@
 
 \section{\gr{Δομή Εφαρμογής}} 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{diagram/diagram.png} 
+    \includegraphics[width=1.25\textwidth]{images/diagra.png} 
     \caption{\gr{Το} \en{UML} \gr{διάγραμμα.}}
 %    \label{fig:my_figure} % Optional: 
 \end{figure}
@@ -89,30 +90,21 @@
     \item \gr{Η συνάρτηση} \en{main} \gr{είναι η κύρια συνάρτηση της εφαρμογής και διαχειρίζεται την κύρια ροή της εφαρμογής.}
     \item \gr{Διαχειρίζεται την πλοήγηση μέσω της} \en{sidebar} \gr{της εφαρμογής και καλεί άλλες συναρτήσεις ανάλογα με την επιλεγμένη ενότητα.}
     \item \gr{Η ενότητα} \en{Upload Data} \gr{φορτώνει και εμφανίζει δεδομένα από αρχεία \en{CSV} \gr{ή} \en{Excel.}}
-    \item \gr{Η ενότητα} \en{Data Visualization} \gr{επιτρέπει την απεικόνιση των δεδομένων με διάφορους τύπους γραφημάτων, όπως} \en{PCA} \gr{και} \en{LDA}.
-    \item \gr{Η ενότητα} \en{Machine Learning} \gr{εκτελεί αλγορίθμους μηχανικής μάθησης, όπως} \en{KNN} \gr{και} \en{Decision Trees} \gr{για ταξινόμηση, και} \en{K-Means} \gr{και} \en{GMM} \gr{για ομαδοποίηση.}
+    \item \gr{Η ενότητα} \en{Data Visualization} \gr{επιτρέπει την απεικόνιση των δεδομένων με διάφορους τύπους γραφημάτων, όπως} \en{PCA} \gr{και} \en{UMAP}.
+    \item \gr{Η ενότητα} \en{Machine Learning} \gr{εκτελεί αλγορίθμους μηχανικής μάθησης, όπως} \en{KNN} \gr{και} \en{SVM} \gr{για ταξινόμηση} 
+    \item \gr{ Η ενώτητα} \en{Feature Selection} \en{επιτρέπει τον χρήστη να επιλέξει ένα αριθμό απο χαρακτηριστικά του σετ για να εφαρμοστούν οι αλγόριθμοι}
     \item \gr{Η ενότητα} \en{Information} \gr{καλεί τη συνάρτηση} \en{display\_info} \gr{για να εμφανίσει πληροφορίες σχετικά με την εφαρμογή.}
 \end{itemize}
 
 \subsection{\en{ML}}
-\subsubsection{\en{Clustering}}
-\gr{Η ομαδοποίηση είναι μια μη επιβλεπόμενη τεχνική μηχανικής μάθησης που έχει ως στόχο να βρει ομάδες ή συσσωματώματα παρόμοιων δεδομένων. Εδώ είναι μερικές από τις χρησιμοποιούμενες μεθόδους:}
-
-\begin{itemize}
-    \item \textbf{\en{K-Means Clustering}}: \gr{Η συνάρτηση} \en{`kmeans`} \gr{χρησιμοποιεί τον αλγόριθμο} \en{K-Means} \gr{για να ομαδοποιήσει τα δεδομένα σε} \en{\( k \)} \gr{ομάδες. Τα δεδομένα κανονικοποιούνται και στη συνέχεια γίνεται πρόβλεψη των συστάδων για το δοκιμαστικό σύνολο δεδομένων. Ο υπολογισμός του προσαρμοσμένου δείκτη Rand (ARI) χρησιμοποιείται για την αξιολόγηση της ακρίβειας.}
-
-    \item \textbf{\en{Gaussian Mixture Model (GMM)}}: \gr{Η συνάρτηση} \en{`gmm`} \gr{εφαρμόζει το μοντέλο} \en{Gaussian Mixture} \gr{για να εντοπίσει συστάδες με βάση την κανονική κατανομή των δεδομένων. Το αποτέλεσμα αξιολογείται επίσης μέσω του προσαρμοσμένου δείκτη \en{Rand (ARI).}}
-\end{itemize}
-
 \subsubsection{\en{Classification}}
 \gr{Η κατηγοριοποίηση είναι η διαδικασία της ανάθεσης μιας ετικέτας σε κάθε δείγμα βάσει των χαρακτηριστικών του. Μερικές από τις χρησιμοποιούμενες μεθόδους περιλαμβάνουν:}
 
 \begin{itemize}
     \item \en{K-Nearest Neighbors (KNN)}: \gr{Η συνάρτηση} \en{`knn`} \gr{υλοποιεί τον αλγόριθμο} \en{K-Nearest Neighbors (KNN)} \gr{για την κατηγοριοποίηση των δεδομένων. Ο αλγόριθμος βασίζεται στους πιο κοντινούς γείτονες ενός δείγματος για να προσδιορίσει την κλάση του.}
 
-    \item \en{Decision Tree}: \gr{Η συνάρτηση} \en{decision\_tree} \gr{χρησιμοποιεί τον αλγόριθμο} \en{Decision Tree} \gr{για την κατηγοριοποίηση των δεδομένων. Το μοντέλο εκπαιδεύεται και οπτικοποιείται το} \en{decision tree} \gr{για να εμφανιστεί πώς λαμβάνονται οι αποφάσεις.}
-
-    \item \en{Random Forest}: \gr{Η συνάρτηση} \en{`random\_forest`} \gr{εφαρμόζει τον αλγόριθμο} \en{Random Forest} \gr{, ο οποίος συνδυάζει πολλά} \en{decision trees} \gr{για να βελτιώσει την ακρίβεια της κατηγοριοποίησης. Ο αλγόριθμος οπτικοποιεί ένα από τα δέντρα του δάσους για ανάλυση.}
+    \item \en{Support Vector Machine (SVM)}: \gr{Η συνάρτηση} \en{`svm`} \gr{χρησιμοποιεί τον αλγόριθμο} \en{Support Vector Machine} \gr{για την κατηγοριοποίηση των δεδομένων. Ο αλγόριθμος λειτουργεί με την εύρεση του υπερ-επίπεδου που διαχωρίζει τα δεδομένα σε διαφορετικές κατηγορίες, με στόχο τη μέγιστη απόσταση μεταξύ των κατηγοριών. Το SVM μπορεί να επεξεργαστεί και μη γραμμικά δεδομένα μέσω της χρήσης του πυρήνα (kernel), επιτρέποντας τη μετατροπή του προβλήματος σε υψηλότερη διάσταση για καλύτερη διαχωριστικότητα.}
+    
 \end{itemize}
 
 \subsubsection{\en{Visualization}}
@@ -121,8 +113,8 @@
 \begin{itemize}
     \item \en{PCA (Principal Component Analysis)}: \gr{Η συνάρτηση} \en{pca\_plot} \gr{χρησιμοποιεί την} \en{PCA} \gr{για τη μείωση των διαστάσεων των δεδομένων και την απεικόνισή τους σε έναν δισδιάστατο χώρο, διατηρώντας όσο το δυνατόν περισσότερη πληροφορία.}
 
-    \item \en{LDA (Linear Discriminant Analysis)}: \gr{Η συνάρτηση} \en{lda\_plot} \gr{εφαρμόζει την} \en{LDA} \gr{για την απεικόνιση των δεδομένων σε δύο διαστάσεις, διαχωρίζοντας τις κλάσεις με βάση τα γραμμικά διακριτικά.}
-
+    \item \en{UMAP (Uniform Manifold Approximation and Projection)}: \gr{Η συνάρτηση} \en{umap\_plot} \gr{εφαρμόζει την} \en{UMAP} \gr{για την απεικόνιση των δεδομένων σε δύο διαστάσεις, διατηρώντας τη δομή των δεδομένων και την εγγύτητα των δειγμάτων στον αρχικό πολυδιάστατο χώρο.}
+    
     \item \en{Correlation Heatmap}: \gr{Η συνάρτηση} \en{correlation\_heatmap} \gr{δημιουργεί έναν θερμικό χάρτη που εμφανίζει τις συσχετίσεις μεταξύ των αριθμητικών χαρακτηριστικών ενός συνόλου δεδομένων.}
 
     \item \en{Box Plot}: \gr{Η συνάρτηση} \en{box\_plot} \gr{δημιουργεί ένα} \en{box plot} \gr{για να εμφανίσει την κατανομή των αριθμητικών δεδομένων και να εντοπίσει πιθανές ακραίες τιμές.}
@@ -132,18 +124,31 @@
     \item \en{Distribution Plot}: \gr{Η συνάρτηση} \en{distribution\_plot} \gr{εμφανίζει την κατανομή των χαρακτηριστικών σε ένα σύνολο δεδομένων, συνδυάζοντας ιστογράμματα και καμπύλες πυκνότητας.}
 \end{itemize}
 
+\subsubsection{\en{Feature Selection}}
+\item \en{Feature Selection}: \gr{Η συνάρτηση} \en{feature\_selection} \gr{επιλέγει τα καλύτερα χαρακτηριστικά με βάση το στατιστικό} \en{ANOVA F}. \gr{Χρησιμοποιεί τη μέθοδο} \en{SelectKBest} \gr{από τη βιβλιοθήκη} \en{scikit-learn} \gr{με τη συνάρτηση} \en{f\_classif} \gr{για να επιλέξει τα} \en{k} \gr{καλύτερα χαρακτηριστικά από τα δεδομένα εισόδου. Επιστρέφει τα επιλεγμένα χαρακτηριστικά καθώς και τους δείκτες τους.}
+
+
+
 \subsection{\en{Utils}}
 
 \subsubsection{\en{Data Loading}}
 \gr{Η συνάρτηση} \en{load\_data} \gr{φορτώνει δεδομένα από διάφορους τύπους αρχείων και ελέγχει αν είναι} \en{CSV} \gr{ή} \en{Excel}. \gr{Επιστρέφει τα δεδομένα ή ένα μήνυμα σφάλματος.}
 
-\subsubsection{\en{Classifier Comparison}}
-\gr{Η συνάρτηση} \en{compare\_classifiers} \gr{συγκρίνει τις επιδόσεις των αλγορίθμων} \en{K-Nearest Neighbors (KNN)} \gr{και} \en{Decision Tree (DT)} \gr{και εμφανίζει προειδοποιήσεις για ενδεχόμενη υπερεκπαίδευση.}
+\subsubsection{\en{Algorithm Comparison}}
+\gr{Η συνάρτηση} \en{compare\_algorithms} \gr{συγκρίνει τις αποδόσεις των αλγορίθμων} \en{K-Nearest Neighbors (KNN)} \gr{και} \en{Support Vector Machine (SVM)} \gr{με βάση τα μετρικά} \en{accuracy, F1 score, ROC-AUC}. \gr{Η σύγκριση γίνεται αρχικά στα δεδομένα χωρίς μείωση διαστάσεων και, εάν παρέχονται, και στα δεδομένα που έχουν υποστεί επιλογή χαρακτηριστικών.}
 
+\gr{Η συνάρτηση υπολογίζει ποιο μοντέλο αποδίδει καλύτερα για κάθε μετρικό (π.χ. ακρίβεια, F1 score, ROC-AUC), συγκρίνοντας τα αποτελέσματα των δύο μοντέλων και επισημαίνοντας ποιο από τα δύο έχει την καλύτερη απόδοση. Αντίστοιχα, συγκρίνεται και η απόδοση κάθε αλγορίθμου πριν και μετά την εφαρμογή επιλογής χαρακτηριστικών.}
 
+\gr{Οι βασικές ενότητες της σύγκρισης περιλαμβάνουν:}
 
-\subsubsection{\en{Cluster Comparison}}
-\gr{Η συνάρτηση} \en{compare\_clusters} \gr{συγκρίνει τις επιδόσεις των αλγορίθμων} \en{K-Means} \gr{και} \en{Gaussian Mixture Model (GMM)} \gr{με βάση τον προσαρμοσμένο δείκτη Rand (ARI), και εμφανίζει προειδοποιήσεις για ενδεχόμενο υπερεκπαίδευση.}
+\begin{itemize}
+    \item \gr{Σύγκριση των αποδόσεων του} \en{KNN} \gr{και του} \en{SVM} \gr{στα πρωτότυπα δεδομένα}.
+    \item \gr{Σύγκριση των αποδόσεων του} \en{KNN} \gr{και του} \en{SVM} \gr{στα δεδομένα με μειωμένα χαρακτηριστικά, αν υπάρχουν.}
+    \item \gr{Σύγκριση της απόδοσης του} \en{KNN} \gr{πριν και μετά τη μείωση των χαρακτηριστικών.}
+    \item \gr{Σύγκριση της απόδοσης του} \en{SVM} \gr{πριν και μετά τη μείωση των χαρακτηριστικών.}
+\end{itemize}
+
+\gr{Για κάθε σύγκριση, η συνάρτηση ελέγχει ποιος αλγόριθμος αποδίδει καλύτερα ανά μετρικό και εμφανίζει το αποτέλεσμα με τη βοήθεια της βιβλιοθήκης} \en{Streamlit}, \gr{τονίζοντας ποιος αλγόριθμος υπερέχει.}
 
 \subsubsection{\en{App Information}}
 \gr{Πληροφορίες Εφαρμογής}
@@ -151,7 +156,7 @@
 \section{\gr{Παρουσίαση Εφαρμογής}}
 
 \subsubsection{\en{Navigation}}
-\gr{Παρακάτω εξηγείται πώς χρησιμοποιούμε την εφαρμογή. Κατά την είσοδο στην εφαρμογή, ο χρήστης έρχεται σε επαφή με το} \en{UI,} \gr{το οποίο περιλαμβάνει ένα widget για ανέβασμα αρχείων, καθώς και ένα} \en{sidebar menu } \gr{που χρησιμοποιεί για να περιηγηθεί στην εφαρμογή.}
+\gr{Παρακάτω εξηγείται πώς χρησιμοποιούμε την εφαρμογή. Κατά την είσοδο στην εφαρμογή, ο χρήστης έρχεται σε επαφή με το} \en{UI,} \gr{το οποίο περιλαμβάνει ένα widget για ανέβασμα αρχείων, καθώς και ένα οριζόντιο μενού ,το οποίο δημιουργείται έυκολα με την ββλιοθήκη} \en{streamlit-option-menu} \gr{που χρησιμοποιεί για να περιηγηθεί στην εφαρμογή.}
 
 % Εικόνα για Οθόνη Έναρξης
 \begin{figure}[H]
@@ -187,7 +192,7 @@
 \gr{Αν επιστρέψει στο ανέβασμα αρχείων, τότε τα δεδομένα χάνονται και ζητείται να ανέβει ένα καινούργιο αρχείο.}
 
 \subsubsection{\gr{Οπτικοποίση}}
-\gr{Επιλέγοντας οπτικοποίηση, ο χρήστης έχει δύο δυνατότητες. Από ένα} \en{dropdown menu} \gr{επιλέγει είτε τον αλγόριθμο} \en{PCA} \gr{ή} \en{LDA} \gr{και να δημιουργήσει ένα διάγραμμα, καθώς επίσης και μερικά διαγράμματα επεξηγηματικών δεδομένων, τα οποία θα εμφανιστούν κάθετα κάτω από το διάγραμμα του αλγορίθμου οπτικοποίησης. Τα διαγράμματα αυτά είναι:}
+\gr{Επιλέγοντας οπτικοποίηση, ο χρήστης έχει δύο δυνατότητες. Από ένα} \en{dropdown menu} \gr{επιλέγει είτε τον αλγόριθμο} \en{PCA} \gr{ή} \en{UMAP} \gr{και να δημιουργήσει ένα διάγραμμα, καθώς επίσης και μερικά διαγράμματα επεξηγηματικών δεδομένων, τα οποία θα εμφανιστούν κάθετα κάτω από το διάγραμμα του αλγορίθμου οπτικοποίησης. Τα διαγράμματα αυτά είναι:}
 
 % Εικόνα για Οπτικοποίηση Δεδομένων
 \begin{figure}[H]
@@ -200,46 +205,61 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/lda.png} 
-    \caption{\gr{Ο αλγόριθμος \en{LDA}}}
+    \includegraphics[width=0.8\textwidth]{images/umap.png} 
+    \caption{\gr{Ο αλγόριθμος \en{Umap}}}
+    \label{fig:data_visualization_lda}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/eda.png} 
+    \caption{\en{EDA}}}
     \label{fig:data_visualization_lda}
 \end{figure}
 
 \subsubsection{\en{Classification}}
-\gr{Όσον αφορά τη μηχανική μάθηση, ο χρήστης μπορεί να επιλέξει ανάμεσα σε δύο προβλήματα,} \en{classification} \gr{και} \en{clustering}\gr{, τσεκάροντας το αντίστοιχο κυκλάκι. Στην περίπτωση της κατηγοριοποίησης, ο χρήστης επιλέγει μεταξύ των αλγορίθμων} \en{k-means} \gr{και} \en{decision tree}\gr{. Σε κάθε περίπτωση, χρησιμοποιεί μια μπάρα για να επιλέξει το} \en{k}\gr{, και εφαρμόζονται και οι δύο αλγόριθμοι. Τα αποτελέσματα συγκρίνονται με βάση τον δείκτη} \en{accuracy} \gr{για να αξιολογηθεί η επίδοσή τους. Τις περισσότερες φορές, το} \en{decision tree} \gr{υπερέχει του} \en{k-nearest neighbors (KNN)}\gr{, καθώς για μερικές τιμές του} \en{k} \gr{το} \en{KNN} \gr{υπερπροσαρμόζεται} (\en{overfits})\gr{. Εμφανίζεται μήνυμα που προειδοποιεί τον χρήστη να επιλέξει τον κατάλληλο αλγόριθμο κάθε φορά.}
+\gr{Όσον αφορά τη μηχανική μάθηση, ο χρήστης μπορεί να επιλέξει ανάμεσα σε δύο προβλήματα,} \en{classification} \gr{και} \en{clustering}\gr{, τσεκάροντας το αντίστοιχο κυκλάκι. Στην περίπτωση της κατηγοριοποίησης, ο χρήστης επιλέγει μεταξύ των αλγορίθμων} \en{k-nearest neighbors (KNN)} \gr{και} \en{support vector machine (SVM)}\gr{. Ο χρήστης χρησιμοποιεί μια μπάρα για να επιλέξει την τιμή του παραμέτρου} \en{k} \gr{για το} \en{KNN} \gr{και οι δύο αλγόριθμοι εφαρμόζονται στα δεδομένα. Τα αποτελέσματα αξιολογούνται με βάση τους δείκτες} \en{accuracy, ROC-AUC,} \gr{και} \en{F1 score}\gr{.}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/knn.png} 
-    \caption{\gr{KNN}}
+    \includegraphics[width=0.8\textwidth]{images/ml.png} 
+    \caption{\en{KNN and SVM}}
     \label{fig:knn}
 \end{figure}
 
+\gr{Τα αποτελέσματα συγκρίνονται, και ο αλγόριθμος που αποδίδει καλύτερα στους περισσότερους δείκτες αναδεικνύεται ως η καλύτερη επιλογή. Συχνά, το} \en{SVM} \gr{έχει καλύτερη απόδοση από το} \en{KNN} \gr{για δεδομένα υψηλών διαστάσεων, ειδικά όταν το} \en{KNN} \gr{υπερπροσαρμόζεται} (\en{overfits})\gr{. Εάν τα αποτελέσματα είναι παρόμοια, εμφανίζεται μήνυμα που προειδοποιεί τον χρήστη να εξετάσει περαιτέρω ποιος αλγόριθμος είναι κατάλληλος για το συγκεκριμένο σύνολο δεδομένων.}
+
+\subsubsection{\en{Feature Selection}}
+\gr{Η επιλογή χαρακτηριστικών είναι μια κρίσιμη διαδικασία στη μηχανική μάθηση, καθώς επιτρέπει τη μείωση της διάστασης του προβλήματος, βελτιώνοντας την αποδοτικότητα και την απόδοση των μοντέλων. Η συνάρτηση} \en{feature\_selection} \gr{εφαρμόζει την τεχνική} \en{ANOVA F-statistic} \gr{για να επιλέξει τα πιο σημαντικά χαρακτηριστικά. Πιο συγκεκριμένα, η συνάρτηση χρησιμοποιεί τη μέθοδο} \en{SelectKBest} \gr{από τη βιβλιοθήκη} \en{scikit-learn}\gr{.}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/tree.png} 
-    \caption{\gr{Δ'εντρο Επιλογής}}
+    \includegraphics[width=0.8\textwidth]{images/feature_selection.png} 
+    \caption{\gr{Επιλογή Χαρακτηριστικών}}
     \label{fig:tree}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/overfit.png} 
-    \caption{\gr{Υπερπροσαρμογή}}
+    \includegraphics[width=0.8\textwidth]{images/comparison.png} 
+    \caption{\gr{Σύγκριση Αλγορύθμων}}
     \label{fig:overfit}
 \end{figure}
 
-\subsubsection{\en{Clustering}}
-\gr{Όσον αφορά το} \en{clustering}\gr{, ο χρήστης μπορεί να επιλέξει μεταξύ των αλγορίθμων} \en{Gaussian Mixture Model (GMM)} \gr{και} \en{k-means}\gr{. Κανένας από τους δύο αλγορίθμους δεν υπερπροσαρμόζεται} (\en{overfits})\gr{, αλλά η απόδοσή τους μπορεί να διαφέρει ανάλογα με τα δεδομένα. Σε ορισμένες περιπτώσεις, το} \en{GMM} \gr{αποδίδει καλύτερα, ενώ σε άλλες το} \en{k-means} \gr{είναι πιο αποδοτικό. Για τη σύγκριση των αποτελεσμάτων χρησιμοποιείται ο δείκτης} \en{Adjusted Rand Index (ARI)}\gr{, ο οποίος επιτρέπει την αξιολόγηση της ποιότητας των ομάδων που δημιουργούνται από κάθε αλγόριθμο.}
+\subsubsection{\en{Comparison Between Results}}
+\gr{Η σύγκριση μεταξύ των αλγορίθμων} \en{K-Nearest Neighbors (KNN)} \gr{και} \en{Support Vector Machine (SVM)} \gr{παρουσιάζεται δυναμικά στην εφαρμογή μέσω της πλατφόρμας} \gr{. Οι μετρικές} \en{Accuracy, F1 Score,} \gr{και} \en{ROC-AUC} \gr{απεικονίζονται με απλό και κατανοητό τρόπο για την ανάλυση των αποτελεσμάτων τόσο στα αρχικά δεδομένα όσο και στα μειωμένα δεδομένα.}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/clustering.png} 
-    \caption{\en{Clustering}}
-    \label{fig:clustering}
-\end{figure}
+{\en{Comparing KNN and SVM on Original Data}}
+\gr{Στην αρχική απεικόνιση, παρουσιάζονται οι επιδόσεις των δύο αλγορίθμων στα αρχικά δεδομένα. Για κάθε μετρική (} \en{Accuracy, F1 Score, ROC-AUC}\gr{), η εφαρμογή εμφανίζει μήνυμα που αναδεικνύει τον αλγόριθμο που υπερτερεί. Για παράδειγμα, αν το} \en{SVM} \gr{υπερτερεί στην} \en{Accuracy}\gr{, εμφανίζεται το μήνυμα:} \en{"SVM (Original) performs better on Accuracy"}\gr{. Αυτή η διαδικασία επαναλαμβάνεται για όλες τις μετρικές.}
 
-\section{\gr{Χρήση μέσω }\en{Docker}}
+\en{Comparing KNN and SVM on Reduced Data}}
+\gr{Αν ο χρήστης έχει επιλέξει να μειώσει τα χαρακτηριστικά, η εφαρμογή παρουσιάζει τη σύγκριση των δύο αλγορίθμων στα μειωμένα δεδομένα. Οι μετρικές} \en{Accuracy, F1 Score, ROC-AUC} \gr{εμφανίζονται ξανά, και αναφέρεται ο αλγόριθμος που έχει την καλύτερη απόδοση, π.χ.:} \en{"Both KNN (Reduced) and SVM (Reduced) perform equally on Accuracy"} \gr{ή} \en{"SVM (Reduced) performs better on F1 Score"}\gr{.}
+
+\en{Original vs Reduced Data Comparison for Each Algorithm}}
+\gr{Τέλος, η εφαρμογή εμφανίζει τη σύγκριση της απόδοσης του ίδιου αλγορίθμου μεταξύ των αρχικών και μειωμένων δεδομένων. Για παράδειγμα, εάν ο} \en{KNN} \gr{έχει καλύτερη απόδοση στα αρχικά δεδομένα σε σύγκριση με τα μειωμένα, εμφανίζεται το μήνυμα:} \en{"KNN (Original) performs better on Accuracy"}\gr{. Αν δεν υπάρχουν δεδομένα για κάποιες μετρικές, η εφαρμογή ενημερώνει τον χρήστη με το κατάλληλο μήνυμα, π.χ.:} \en{"No ROC-AUC available"}\gr{.}
+
+
+\section{\gr{Εκτέλεση με }\en{Docker}}
 
 \begin{itemize}
     \item \gr{Η εικόνα} \en{Python 3.9 Slim} \gr{χρησιμοποιείται ως βάση.}
@@ -266,6 +286,7 @@
     \item \en{\href{https://github.com/inf2021090/sw-project/tree/main/src}{Source Code}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/inf2021090_project_report.tex}{Report Raw LaTeX File}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/inf2021090_project_report.pdf}{Report PDF}} 
+    \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/Dockerfile}{Dockerfile}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/diagram/diagram.png}{UML Diagram}} 
     \item \en{\href{https://github.com/inf2021090/sw-project/blob/main/docs/diagram/diagram.puml}{UML Diagram Code}} 
 \end{itemize}
