@@ -13,6 +13,15 @@ To run the application, you can use the provided **Docker** setup. This ensures 
    cd sw-project
 The app will be available at [http://localhost:8501](http://localhost:8501) on your browser.
 
+2.  ** Build nad run using docker
+   ```bash
+      docker build -t ml-app .
+   ```
+   ```bash
+      docker run -p 8501:8501 ml-app
+```
+
+
 ## Additional Shortcuts
 
 Feel free to use the provided **Makefile** to automate common tasks like setting up a virtual environment, running tests, or cleaning up. You can enhance the **Makefile** to shorten tasks further.
