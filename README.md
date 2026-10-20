@@ -1,6 +1,4 @@
-Here is the raw Markdown content as a single block so you can copy it directly:
 
-```markdown
 # Software Engineering Project
 
 This project was developed as part of a university Software Engineering course. It is a machine learning application that allows users to explore datasets, visualize data, select features, and compare different classification algorithms through an interactive web interface.
@@ -68,14 +66,9 @@ Then visit `http://localhost:8501`.
 * `Dockerfile` – Docker configuration.
 * `Makefile` – Commands for running the application and managing project files.
 
-## Authors
-
-Developed as part of a university Software Engineering project.
 
 ## License
 
 This project was created for educational purposes.
 
-```
 
-```
